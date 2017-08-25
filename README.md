@@ -1,0 +1,1 @@
+Runnable examples for demo purposes, idea taken from https://github.com/CarlosLanderas/CSharp-6-and-7-features
