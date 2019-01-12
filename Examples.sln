@@ -3,12 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunnableExamples", "ConsoleApp1\RunnableExamples.csproj", "{DD735F93-0703-4D19-9067-11E3BDC31977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunnableExamples", "RunnableExamples\RunnableExamples.csproj", "{DD735F93-0703-4D19-9067-11E3BDC31977}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7E2F40A6-E9E0-43B1-B4BE-3738C1379AE7}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuExamples", "MenuExamples\MenuExamples.csproj", "{7BEFC2A6-1DA1-4B11-A623-5F6202B684DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +22,10 @@ Global
 		{DD735F93-0703-4D19-9067-11E3BDC31977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD735F93-0703-4D19-9067-11E3BDC31977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD735F93-0703-4D19-9067-11E3BDC31977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BEFC2A6-1DA1-4B11-A623-5F6202B684DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BEFC2A6-1DA1-4B11-A623-5F6202B684DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BEFC2A6-1DA1-4B11-A623-5F6202B684DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BEFC2A6-1DA1-4B11-A623-5F6202B684DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

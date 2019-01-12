@@ -1,1 +1,2 @@
 Runnable examples for demo purposes, idea taken from https://github.com/CarlosLanderas/CSharp-6-and-7-features
+and https://codereview.stackexchange.com/questions/142627/optimizing-simple-menu-in-console-app
