@@ -9,11 +9,11 @@ Ideas taken from https://github.com/CarlosLanderas/CSharp-6-and-7-features (proj
 ```csharp
 using System.Reflection;
 
-RunExamples();
+await RunExamplesAsync();
 
 return;
 
-void RunExamples()
+async Task RunExamplesAsync()
 {
     var examples = GetExamples().ToList();
     var i = 1;
@@ -31,7 +31,7 @@ void RunExamples()
         var input = Console.ReadLine();
         if (int.TryParse(input, out var runnableIndex) && runnableIndex > 0 && runnableIndex <= examples.Count)
         {
-            examples.ElementAt(runnableIndex - 1).Run();
+            await examples.ElementAt(runnableIndex - 1).RunAsync();
         }
         else if (int.TryParse(input, out var exitIndex) && exitIndex == i)
         {
@@ -49,24 +49,27 @@ IEnumerable<IRunnable> GetExamples() =>
         .Where(t => typeof(IRunnable).IsAssignableFrom(t) && t is { IsInterface: false, IsAbstract: false })
         .Select(t => (IRunnable)Activator.CreateInstance(t)!);
 
+
 internal interface IRunnable
 {
-    void Run();
+    Task RunAsync();
 }
 
 internal class Example1 : IRunnable
 {
-    public void Run()
+    public Task RunAsync()
     {
         Console.WriteLine("Example1");
+        return Task.CompletedTask;
     }
 }
 
 internal class Example2 : IRunnable
 {
-    public void Run()
+    public Task RunAsync()
     {
         Console.WriteLine("Example2");
+        return Task.CompletedTask;
     }
 }
 ```
