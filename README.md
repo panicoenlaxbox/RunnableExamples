@@ -8,30 +8,45 @@ Ideas taken from https://github.com/CarlosLanderas/CSharp-6-and-7-features (proj
 
 ```csharp
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .AddUserSecrets(Assembly.GetExecutingAssembly())
+    .Build();
+
+var services = new ServiceCollection();
+services
+    .AddTransient<IConfiguration>(_ => configuration)
+    .AddLogging(configure => configure.AddConsole());
+
+RegisterExamples();
 await RunExamplesAsync();
 
 return;
 
 async Task RunExamplesAsync()
 {
-    var examples = GetExamples().ToList();
+    var examples = GetExamples();
+    
     var i = 1;
     foreach (var example in examples)
     {
-        Console.WriteLine($"{i++}. {example.GetType().Name}");
+        Console.WriteLine($"{i++}. {example}");
     }
-
     Console.WriteLine($"{i}. Exit");
-
     Console.Write("Enter the number of the example to run: ");
 
     while (true)
     {
         var input = Console.ReadLine();
-        if (int.TryParse(input, out var runnableIndex) && runnableIndex > 0 && runnableIndex <= examples.Count)
+        if (int.TryParse(input, out var exampleIndex) && exampleIndex > 0 && exampleIndex <= examples.Length)
         {
-            await examples.ElementAt(runnableIndex - 1).RunAsync();
+            using var scope = services.BuildServiceProvider().CreateScope();
+            await scope.ServiceProvider.GetRequiredKeyedService<IRunnable>(examples.ElementAt(exampleIndex - 1))
+                .RunAsync();
         }
         else if (int.TryParse(input, out var exitIndex) && exitIndex == i)
         {
@@ -44,22 +59,31 @@ async Task RunExamplesAsync()
     }
 }
 
-IEnumerable<IRunnable> GetExamples() =>
+void RegisterExamples() =>
     Assembly.GetExecutingAssembly().GetTypes()
         .Where(t => typeof(IRunnable).IsAssignableFrom(t) && t is { IsInterface: false, IsAbstract: false })
-        .Select(t => (IRunnable)Activator.CreateInstance(t)!);
+        .Select(t => t)
+        .ToList()
+        .ForEach(t => { services.AddKeyedTransient(typeof(IRunnable), t.Name, t); });
 
+
+string[] GetExamples()
+{
+    return services.Where(sd => sd.ServiceType == typeof(IRunnable))
+        .Select(sd => (string)sd.ServiceKey!)
+        .ToArray();
+}
 
 internal interface IRunnable
 {
     Task RunAsync();
 }
 
-internal class Example1 : IRunnable
+internal class Example1(ILogger<Example1> logger) : IRunnable
 {
     public Task RunAsync()
     {
-        Console.WriteLine("Example1");
+        logger.LogInformation("Example1");
         return Task.CompletedTask;
     }
 }
