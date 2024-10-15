@@ -1,4 +1,4 @@
-# Inntroduction
+# Introduction
 
 Runnable examples for demo purposes
 
@@ -9,11 +9,11 @@ Ideas taken from https://github.com/CarlosLanderas/CSharp-6-and-7-features (proj
 ```csharp
 using System.Reflection;
 
-RunExample();
+RunExamples();
 
 return;
 
-void RunExample()
+void RunExamples()
 {
     var examples = GetExamples().ToList();
     var i = 1;
